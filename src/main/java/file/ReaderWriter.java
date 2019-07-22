@@ -3,6 +3,7 @@ package file;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ReaderWriter {
@@ -12,7 +13,7 @@ public class ReaderWriter {
         this.str = str;
     }
 
-    public ReaderWriter (){
+    public ReaderWriter() {
 
     }
 
@@ -27,46 +28,25 @@ public class ReaderWriter {
     }
 
     public void writeToFileAsText(String path) {
-        FileWriter output = null;
-        try {
-            output = new FileWriter(path);
+        try (FileWriter output = new FileWriter(path)) {
             output.write(str);
             output.close();
         } catch (IOException ex) {
-            System.err.println(ex);
-        } finally {
-            if (output != null) {
-                try {
-                    output.close();
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
-            }
+            System.err.println(ex.getMessage());
+            System.err.println(Arrays.toString(ex.getStackTrace()));
         }
+
     }
 
     public void printTextFromFile(String path) {
-        FileReader inp = null;
-        try {
-            inp = new FileReader(path);
-            try {
-                int symbol;
-                while ((symbol = inp.read()) != -1) {
-                    System.out.println((char) symbol);
-                }
-            } catch (IOException ex) {
-                System.err.println(ex);
+        try (FileReader inp = new FileReader(path)) {
+            int symbol;
+            while ((symbol = inp.read()) != -1) {
+                System.out.print((char) symbol);
             }
         } catch (IOException ex) {
-            System.err.println(ex);
-        } finally {
-            if (inp != null) {
-                try {
-                    inp.close();
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
-            }
+            System.err.println(ex.getMessage());
+            System.err.println(Arrays.toString(ex.getStackTrace()));
         }
     }
 }
