@@ -1,8 +1,8 @@
 package file;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -28,25 +28,26 @@ public class ReaderWriter {
     }
 
     public void writeToFileAsText(String path) {
-        try (FileWriter output = new FileWriter(path)) {
-            output.write(str);
-            output.close();
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println(Arrays.toString(ex.getStackTrace()));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path), true))) {
+            PrintWriter output = new PrintWriter(bufferedWriter);
+            output.print(str);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
     }
 
     public void printTextFromFile(String path) {
-        try (FileReader inp = new FileReader(path)) {
-            int symbol;
-            while ((symbol = inp.read()) != -1) {
-                System.out.print((char) symbol);
+        try (FileReader fileReader = new FileReader(new File(path))) {
+            BufferedReader reader = new BufferedReader(fileReader);
+            String buffer = new String();
+            while ((buffer = reader.readLine()) != null) {
+                System.out.print(buffer);
             }
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println(Arrays.toString(ex.getStackTrace()));
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }
