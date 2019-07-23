@@ -1,4 +1,4 @@
-package file;
+package app.main.file;
 
 import java.io.*;
 import java.util.Arrays;
@@ -37,7 +37,6 @@ public class ReaderWriter {
             PrintWriter output = new PrintWriter(bufferedWriter);
             output.print(str);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
             System.err.println(Arrays.toString(e.getStackTrace()));
         }
 
@@ -51,7 +50,6 @@ public class ReaderWriter {
                 System.out.print(buffer);
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
             System.err.println(Arrays.toString(e.getStackTrace()));
         }
     }

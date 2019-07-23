@@ -1,7 +1,7 @@
 package main;
 
-import file.Checker;
-import file.ReaderWriter;
+import app.main.file.Checker;
+import app.main.file.ReaderWriter;
 
 import java.util.Scanner;
 
@@ -10,6 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ReaderWriter readerWriter = new ReaderWriter();
         Checker checker = new Checker() {
+            @Override
             public boolean isEnteredWordExit(String str) {
                 if (str.equals("exit"))
                     return true;
@@ -17,12 +18,15 @@ public class Main {
                     return false;
             }
         };
-        do {
+        while (scanner.hasNext()) {
             readerWriter.setStr(scanner.nextLine());
-            readerWriter.writeToFileAsText("D:\\Projects\\fileInputOutput\\Files\\file.txt");
-            readerWriter.printTextFromFile("D:\\Projects\\fileInputOutput\\Files\\file.txt");
-            readerWriter.setStr(scanner.nextLine());
-        } while (!checker.isEnteredWordExit(readerWriter.getStr()));
+            if (!checker.isEnteredWordExit(readerWriter.getStr())) {
+                readerWriter.writeToFileAsText("D:\\Projects\\fileInputOutput\\Files\\file.txt");
+                readerWriter.printTextFromFile("D:\\Projects\\fileInputOutput\\Files\\file.txt");
+            } else
+                break;
+            //  System.exit(0); - грубо, но как вариант можно
+        }
         scanner.close();
     }
 }
