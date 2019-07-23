@@ -1,8 +1,6 @@
 package file;
 
-
 import java.io.*;
-import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,17 +8,24 @@ public class ReaderWriter {
     private String str;
 
     public ReaderWriter(String str) {
-        this.str = str;
+        if (str != null)
+            this.str = str;
+        else
+            this.str = "";
     }
 
     public ReaderWriter() {
-
+        str = "";
     }
 
     public void setStr(Scanner scan) {
         if (scan.hasNext()) {
             str = scan.nextLine();
         }
+    }
+
+    public void setStr(String str) {
+        this.str = str;
     }
 
     public String getStr() {
